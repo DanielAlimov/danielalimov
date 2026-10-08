@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12">
+<title>Качалка</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --glass: rgba(255,255,255,.06);
+    --glass-2: rgba(255,255,255,.1);
+    --stroke: rgba(255,255,255,.1);
+    --text: #f2f4f8;
+    --soft: #98a1b3;
+    --a1: #ff5a5f; --a2: #ff8a5b; --on: #fff;
+    --head: "Unbounded", "Arial Black", system-ui, sans-serif;
+    --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { background: var(--bg); }
+  body {
+    min-height: 100vh; color: var(--text); font-family: var(--body);
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(32px + env(safe-area-inset-bottom, 0px));
+    max-width: 520px; margin: 0 auto; position: relative; overflow-x: hidden;
+  }
+  /* мягкое свечение цвета дня */
+  body::before {
+    content: ""; position: fixed; inset: -20% -30% auto -30%; height: 60vh; z-index: -1;
+    background: radial-gradient(ellipse at 50% 0%, var(--a1) 0%, transparent 65%);
+    opacity: .28; transition: opacity .4s ease; pointer-events: none;
+  }
+
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+  button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* Зал / Дома */
+  .seg {
+    position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 4px;
+    background: var(--glass); border: 1px solid var(--stroke); border-radius: 16px;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  }
+  .seg::before {
+    content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px);
+    border-radius: 12px; background: var(--glass-2); box-shadow: 0 2px 10px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.12);
+    transition: transform .3s cubic-bezier(.3,1.3,.5,1);
+  }
+  .seg[data-place="home"]::before { transform: translateX(100%); }
+  .seg button { position: relative; padding: 12px 8px; font-weight: 700; font-size: 15px; color: var(--soft); transition: color .2s; }
+  .seg button[aria-pressed="true"] { color: var(--text); }
+
+  /* Дни */
+  .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 18px 0 16px; }
+  .day {
+    position: relative; padding: 13px 0 12px; border-radius: 14px; font-weight: 700; font-size: 14px;
+    background: var(--glass); border: 1px solid var(--stroke); color: var(--soft);
+    transition: transform .2s cubic-bezier(.3,1.4,.5,1), background .2s, color .2s;
+  }
+  .day[aria-selected="true"] {
+    background: linear-gradient(145deg, var(--d1), var(--d2)); color: var(--don);
+    border-color: transparent; transform: translateY(-3px);
+    box-shadow: 0 8px 22px -6px var(--d1);
+  }
+  .day i { position: absolute; left: 50%; bottom: 5px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: currentColor; opacity: .85; }
+
+  /* Карточка дня */
+  .hero {
+    position: relative; overflow: hidden; border-radius: 24px; padding: 22px 20px;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--a1) 30%, transparent), color-mix(in srgb, var(--a2) 8%, transparent));
+    border: 1px solid color-mix(in srgb, var(--a1) 40%, transparent);
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  }
+  .hero h1 { font: 700 24px/1.15 var(--head); letter-spacing: -.01em; }
+  .hero p { margin-top: 8px; font-size: 14px; color: color-mix(in srgb, var(--text) 75%, transparent); line-height: 1.35; }
+  .ring { position: relative; width: 74px; height: 74px; flex: none; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring circle { fill: none; stroke-width: 7; stroke-linecap: round; }
+  .ring .bg { stroke: rgba(255,255,255,.14); }
+  .ring .fg { stroke: url(#g); stroke-dasharray: 188.5; stroke-dashoffset: 188.5; transition: stroke-dashoffset .5s cubic-bezier(.3,1,.4,1); }
+  .ring b { position: absolute; inset: 0; display: grid; place-items: center; font: 600 15px var(--head); }
+
+  /* Упражнения */
+  .list { list-style: none; display: grid; gap: 10px; margin-top: 14px; }
+  .row {
+    width: 100%; display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 14px;
+    padding: 14px; text-align: left; border-radius: 18px;
+    background: var(--glass); border: 1px solid var(--stroke);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    transition: transform .15s ease, background .2s, border-color .2s;
+  }
+  .row:active { transform: scale(.98); }
+  .dot {
+    width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
+    background: var(--glass-2); font: 600 14px var(--head); color: var(--soft);
+    transition: background .25s, color .25s, transform .3s cubic-bezier(.3,1.6,.5,1);
+  }
+  .dot svg { width: 20px; height: 20px; display: none; }
+  .name { font-weight: 700; font-size: 16px; line-height: 1.25; transition: color .2s; }
+  .sets {
+    font: 600 13px var(--head); padding: 8px 11px; border-radius: 10px; white-space: nowrap;
+    background: rgba(255,255,255,.08); color: var(--text);
+  }
+  .row[aria-checked="true"] { background: color-mix(in srgb, var(--a1) 12%, transparent); border-color: color-mix(in srgb, var(--a1) 45%, transparent); }
+  .row[aria-checked="true"] .dot { background: linear-gradient(145deg, var(--a1), var(--a2)); color: var(--on); transform: scale(1.08); }
+  .row[aria-checked="true"] .dot span { display: none; }
+  .row[aria-checked="true"] .dot svg { display: block; }
+  .row[aria-checked="true"] .name { color: var(--soft); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.3); }
+
+  .foot { display: flex; justify-content: center; margin-top: 22px; }
+  .reset { color: var(--soft); font-weight: 600; font-size: 14px; padding: 10px 16px; border-radius: 12px; }
+  .reset:hover { background: var(--glass); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="seg" id="seg" data-place="gym" role="group" aria-label="Где тренируешься">
+  <button id="gym" aria-pressed="true">Зал</button>
+  <button id="home" aria-pressed="false">Дома</button>
+</div>
+
+<div class="days" id="days" role="tablist" aria-label="Дни недели"></div>
+
+<section class="hero">
+  <div>
+    <h1 id="title"></h1>
+    <p id="note"></p>
+  </div>
+  <div class="ring" aria-hidden="true">
+    <svg viewBox="0 0 74 74">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" id="s1" stop-color="#ff5a5f"/><stop offset="1" id="s2" stop-color="#ff8a5b"/>
+        </linearGradient>
+      </defs>
+      <circle class="bg" cx="37" cy="37" r="30"/>
+      <circle class="fg" id="fg" cx="37" cy="37" r="30"/>
+    </svg>
+    <b id="count"></b>
+  </div>
+</section>
+
+<ul class="list" id="list"></ul>
+
+<div class="foot"><button class="reset" id="reset">Сбросить отметки дня</button></div>
+
+<script>
+// ───────── Данные: день → место → упражнения [название, "подходы × повторы"]
+const DAYS = [
+  { short: "Пн", c: ["#ff5a5f","#ff8a5b","#fff"], title: "Грудь и трицепс", rest: "Отдых между подходами: 90 сек",
+    gym: [["Жим штанги лёжа","4×8"],["Жим гантелей на наклонной","3×10"],["Разводка гантелей","3×12"],["Жим узким хватом","3×10"],["Французский жим","3×12"]],
+    home: [["Отжимания","4×макс"],["Отжимания, ноги на возвышении","3×12"],["Алмазные отжимания","3×10"],["Обратные отжимания от стула","3×12"]] },
+  { short: "Вт", c: ["#4c8dff","#6fd0ff","#fff"], title: "Спина и бицепс", rest: "Отдых между подходами: 90 сек",
+    gym: [["Подтягивания","4×8"],["Тяга верхнего блока","4×10"],["Тяга штанги в наклоне","3×10"],["Тяга нижнего блока","3×12"],["Сгибания на бицепс со штангой","3×12"]],
+    home: [["Подтягивания на турнике","4×макс"],["Тяга гантели одной рукой","4×12"],["Тяга рюкзака в наклоне","3×12"],["Сгибания с гантелями","3×12"],["Супермен","3×15"]] },
+  { short: "Ср", c: ["#ffc83d","#ff9f3d","#2a1d00"], title: "Ноги", rest: "Отдых между подходами: 2 мин",
+    gym: [["Приседания со штангой","4×8"],["Жим ногами","4×10"],["Румынская тяга","3×10"],["Разгибания ног","3×12"],["Подъём на носки","4×15"]],
+    home: [["Приседания","4×20"],["Болгарские выпады","3×12"],["Ягодичный мостик","4×15"],["Выпады вперёд","3×12"],["Подъём на носки","4×20"]] },
+  { short: "Чт", c: ["#34d399","#8be36b","#06281a"], title: "Плечи и пресс", rest: "Отдых между подходами: 60 сек",
+    gym: [["Жим штанги стоя","4×8"],["Махи гантелей в стороны","4×12"],["Махи в наклоне","3×12"],["Шраги","3×12"],["Скручивания","3×15"],["Подъём ног в висе","3×12"]],
+    home: [["Жим гантелей стоя","4×10"],["Махи гантелей в стороны","3×15"],["Отжимания уголком","3×10"],["Планка","3×45 сек"],["Скручивания","3×20"],["Подъём ног лёжа","3×15"]] },
+  { short: "Пт", c: ["#a78bfa","#e879f9","#fff"], title: "Грудь и спина", rest: "Отдых между подходами: 90 сек",
+    gym: [["Жим гантелей лёжа","4×10"],["Тяга верхнего блока","4×10"],["Отжимания на брусьях","3×10"],["Тяга гантели","3×10"],["Сведение рук в кроссовере","3×12"]],
+    home: [["Отжимания","4×макс"],["Подтягивания","4×макс"],["Тяга гантели одной рукой","3×12"],["Узкие отжимания","3×10"],["Супермен","3×15"]] },
+  { short: "Сб", c: ["#22d3ee","#2dd4bf","#04262b"], title: "Ноги и ягодицы", rest: "Отдых между подходами: 2 мин",
+    gym: [["Становая тяга","4×6"],["Выпады с гантелями","3×12"],["Ягодичный мостик со штангой","4×10"],["Сгибания ног лёжа","3×12"],["Отведение ноги в тренажёре","3×15"]],
+    home: [["Приседания сумо","4×15"],["Мостик на одной ноге","3×12"],["Выпады назад","3×12"],["Румынская тяга с гантелями","3×12"],["Прыжки из приседа","3×15"]] },
+  { short: "Вс", c: ["#64748b","#94a3b8","#fff"], title: "Отдых", rest: "Сегодня без железа. Мышцы растут, пока ты отдыхаешь.",
+    gym: [["Прогулка","30 мин"],["Растяжка","10 мин"],["Сон","8 часов"]],
+    home: [["Прогулка","30 мин"],["Растяжка","10 мин"],["Сон","8 часов"]] }
+];
+
+// ───────── Telegram (работает и в обычном браузере)
+try {
+  const tg = window.Telegram && Telegram.WebApp;
+  if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0b0d12"); tg.setBackgroundColor && tg.setBackgroundColor("#0b0d12"); }
+} catch (e) {}
+
+// ───────── Состояние
+const todayIdx = (new Date().getDay() + 6) % 7; // Пн = 0
+let place = "gym", day = todayIdx, done = {};
+const KEY = "gym-done-v1";
+try { done = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { done = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} };
+const stateKey = () => `${place}-${day}`;
+const $ = id => document.getElementById(id);
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+// ───────── Отрисовка
+function renderDays() {
+  $("days").innerHTML = DAYS.map((d, i) => `
+    <button class="day" role="tab" aria-selected="${i === day}" data-i="${i}"
+      style="--d1:${d.c[0]};--d2:${d.c[1]};--don:${d.c[2]}" aria-label="${d.short}: ${d.title}">
+      ${d.short}${i === todayIdx ? "<i></i>" : ""}
+    </button>`).join("");
+}
+
+function renderDay() {
+  const d = DAYS[day], r = document.documentElement.style;
+  r.setProperty("--a1", d.c[0]); r.setProperty("--a2", d.c[1]); r.setProperty("--on", d.c[2]);
+  $("s1").setAttribute("stop-color", d.c[0]); $("s2").setAttribute("stop-color", d.c[1]);
+  $("title").textContent = d.title;
+  $("note").textContent = d.rest;
+  const marks = done[stateKey()] || [];
+  $("list").innerHTML = d[place].map(([n, s], i) => `
+    <li><button class="row" role="checkbox" aria-checked="${marks.includes(i)}" data-i="${i}">
+      <span class="dot"><span>${i + 1}</span>${CHECK}</span>
+      <span class="name">${n}</span><span class="sets">${s}</span>
+    </button></li>`).join("");
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = DAYS[day][place].length, n = (done[stateKey()] || []).length;
+  $("count").textContent = `${n}/${total}`;
+  $("fg").style.strokeDashoffset = 188.5 * (1 - n / total);
+}
+
+// ───────── События
+$("days").addEventListener("click", e => {
+  const b = e.target.closest(".day"); if (!b) return;
+  day = +b.dataset.i; renderDays(); renderDay();
+});
+$("list").addEventListener("click", e => {
+  const b = e.target.closest(".row"); if (!b) return;
+  const i = +b.dataset.i, k = stateKey(), arr = done[k] || (done[k] = []);
+  const at = arr.indexOf(i);
+  at >= 0 ? arr.splice(at, 1) : arr.push(i);
+  save(); b.setAttribute("aria-checked", at < 0); updateProgress();
+  try { if (at < 0 && Telegram.WebApp.HapticFeedback) Telegram.WebApp.HapticFeedback.impactOccurred("light"); } catch (e) {}
+});
+function setPlace(p) {
+  place = p; $("seg").dataset.place = p;
+  $("gym").setAttribute("aria-pressed", p === "gym");
+  $("home").setAttribute("aria-pressed", p === "home");
+  renderDay();
+}
+$("gym").onclick = () => setPlace("gym");
+$("home").onclick = () => setPlace("home");
+$("reset").onclick = () => { delete done[stateKey()]; save(); renderDay(); };
+
+renderDays(); renderDay();
+</script>
+</body>
+</html>
