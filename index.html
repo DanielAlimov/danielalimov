@@ -108,19 +108,101 @@
   .row[aria-checked="true"] .dot svg { display: block; }
   .row[aria-checked="true"] .name { color: var(--soft); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.3); }
 
-  .foot { display: flex; justify-content: center; margin-top: 22px; }
+  .foot { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-top: 22px; }
   .reset { color: var(--soft); font-weight: 600; font-size: 14px; padding: 10px 16px; border-radius: 12px; }
   .reset:hover { background: var(--glass); }
 
+  input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--stroke); background: rgba(255,255,255,.06); color: var(--text); font: 600 16px var(--body); }
+  input:focus { outline: 2px solid var(--a1); }
+  .erow { display: grid; grid-template-columns: 1fr 86px 42px; gap: 8px; }
+  .del { border-radius: 12px; background: rgba(255,90,95,.18); color: #ff8a8f; font-weight: 700; }
+  .add { width: 100%; padding: 14px; border-radius: 16px; border: 1px dashed rgba(255,255,255,.25); color: var(--soft); font-weight: 700; }
+  .me { width: 100%; display: flex; gap: 14px; align-items: center; text-align: left; padding: 14px; margin-bottom: 16px; border-radius: 22px;
+    background: linear-gradient(145deg, rgba(124,58,237,.35), rgba(192,132,252,.08)); border: 1px solid rgba(192,132,252,.45); box-shadow: 0 0 28px -10px #a855f7; }
+  .ava { width: 58px; height: 58px; flex: none; border-radius: 16px; background: #2a2146 center/cover; display: grid; place-items: center; font: 700 22px var(--head); border: 2px solid #c084fc; }
+  .me-info { flex: 1; min-width: 0; }
+  .me-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .me-top b { font: 600 16px var(--head); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rank { font: 700 13px var(--head); padding: 4px 9px; border-radius: 8px; background: linear-gradient(145deg, #7c3aed, #c084fc); box-shadow: 0 0 14px #a855f7; white-space: nowrap; }
+  .me-sub { margin-top: 4px; color: var(--soft); font-size: 13px; font-weight: 600; }
+  .xp { height: 8px; border-radius: 4px; background: rgba(255,255,255,.12); margin-top: 10px; overflow: hidden; }
+  .xp i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #7c3aed, #e879f9); transition: width .5s; }
+  .reg { position: fixed; inset: 0; z-index: 10; background: var(--bg); overflow: auto; padding: calc(24px + env(safe-area-inset-top, 0px)) 16px 32px; }
+  .reg-in { max-width: 520px; margin: 0 auto; display: grid; gap: 12px; }
+  .reg h2 { font: 700 26px var(--head); }
+  .avapick { display: flex; align-items: center; gap: 14px; font-weight: 700; cursor: pointer; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .lab { color: var(--soft); font-weight: 700; font-size: 14px; margin-top: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 11px 16px; border-radius: 14px; background: var(--glass); border: 1px solid var(--stroke); font-weight: 700; }
+  .chip[aria-pressed="true"] { background: linear-gradient(145deg, #7c3aed, #c084fc); border-color: transparent; }
+  .go { padding: 16px; border-radius: 16px; background: linear-gradient(145deg, #7c3aed, #c084fc); font: 700 16px var(--head); margin-top: 8px; }
+  .start { width: 100%; margin-top: 14px; padding: 16px; border-radius: 16px; background: linear-gradient(145deg, var(--a1), var(--a2)); color: var(--on); font: 700 16px var(--head); }
+  .wk-top { display: flex; justify-content: space-between; align-items: center; color: var(--soft); font-weight: 700; }
+  .wk h2 { font: 700 32px/1.15 var(--head); margin-top: 28px; }
+  .wk-sets { font: 600 20px var(--head); color: var(--a1); }
+  .wk-timer { margin-top: 20px; padding: 20px; border-radius: 20px; background: var(--glass); border: 1px solid var(--stroke); text-align: center; }
+  .wk-timer b { display: block; font: 700 64px var(--head); }
+  .wk-timer span { color: var(--soft); font-weight: 700; }
+  .wk-nav { display: grid; grid-template-columns: 60px 1fr 60px; gap: 8px; margin-top: 24px; }
+  .wk-nav .chip { font-size: 22px; padding: 0; }
+  .wk-nav .go { margin-top: 0; }
+  .toprow { display: grid; grid-template-columns: 1fr 54px 54px 54px; gap: 8px; }
+  .statbtn { border-radius: 16px; background: var(--glass); border: 1px solid var(--stroke); display: grid; place-items: center; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+  .cards div { padding: 14px 6px; border-radius: 16px; background: var(--glass); border: 1px solid var(--stroke); text-align: center; }
+  .cards b { display: block; font: 700 24px var(--head); }
+  .cards span { font-size: 12px; color: var(--soft); font-weight: 600; }
+  .bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; height: 170px; }
+  .bcol { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; }
+  .bcol em { font: 600 13px var(--head); font-style: normal; height: 16px; }
+  .bcol span { font-size: 13px; font-weight: 700; color: var(--soft); }
+  .btrack { position: relative; flex: 1; width: 100%; }
+  .btrack i { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 8px; min-height: 4px; background: rgba(192,132,252,.4); }
+  .btrack i.now { background: linear-gradient(180deg, #e879f9, #7c3aed); box-shadow: 0 0 14px -2px #a855f7; }
+  .hint { color: var(--soft); font-size: 12px; text-align: center; }
+  .radar { width: 100%; max-width: 320px; margin: 0 auto; display: block; }
+  .bal { padding: 18px; border-radius: 20px; text-align: center; background: linear-gradient(145deg, rgba(245,197,66,.25), rgba(245,197,66,.05)); border: 1px solid rgba(245,197,66,.5); }
+  .bal b { display: block; font: 700 40px var(--head); color: #f5c542; }
+  .bal span { color: var(--soft); font-weight: 700; font-size: 14px; }
+  .srow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px; border-radius: 16px; background: var(--glass); border: 1px solid var(--stroke); }
+  .srow b { display: block; font-size: 15px; }
+  .srow span { font-size: 13px; color: var(--soft); }
+  .srow .x { color: var(--soft); padding: 6px 10px; }
+  .buy { padding: 10px 14px; border-radius: 12px; background: linear-gradient(145deg, #7c3aed, #c084fc); font: 700 13px var(--head); white-space: nowrap; }
+  .buy:disabled { opacity: .4; }
+  .buy.on { background: var(--glass-2); }
+  .msg { padding: 12px 14px; border-radius: 14px; background: rgba(52,211,153,.15); border: 1px solid rgba(52,211,153,.4); font-weight: 600; font-size: 14px; }
+  .start.alt { background: var(--glass); border: 1px solid var(--stroke); color: var(--text); font-size: 14px; margin-top: 8px; }
+  .go:disabled { opacity: .4; }
+  .lbr { justify-content: flex-start; gap: 12px; }
+  .lbr .pl { width: 24px; font: 700 14px var(--head); color: var(--soft); text-align: center; }
+  .lbr.me { border-color: #c084fc; background: rgba(168,85,247,.15); }
+  .ava.sm { width: 40px; height: 40px; flex: none; border-radius: 12px; font-size: 16px; border-width: 1px; }
+  .lbn { flex: 1; min-width: 0; }
+  .lbn b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lxp { font: 700 13px var(--head); white-space: nowrap; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
 
-<div class="seg" id="seg" data-place="gym" role="group" aria-label="Где тренируешься">
+<button class="me" id="me" aria-label="Профиль">
+  <div class="ava" id="ava"></div>
+  <div class="me-info">
+    <div class="me-top"><b id="meName"></b><span class="rank" id="rank"></span></div>
+    <div class="me-sub" id="meSub"></div>
+    <div class="xp"><i id="xpBar"></i></div>
+  </div>
+</button>
+
+<div class="toprow"><div class="seg" id="seg" data-place="gym" role="group" aria-label="Где тренируешься">
   <button id="gym" aria-pressed="true">Зал</button>
   <button id="home" aria-pressed="false">Дома</button>
 </div>
+<button class="statbtn" id="statBtn" aria-label="Статистика"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 20V12M12 20V5M18 20v-5"/></svg></button>
+<button class="statbtn" id="shopBtn" aria-label="Магазин"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8zM9 8a3 3 0 016 0"/></svg></button>
+<button class="statbtn" id="lbBtn" aria-label="Рейтинг"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0V4zM17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg></button></div>
 
 <div class="days" id="days" role="tablist" aria-label="Дни недели"></div>
 
@@ -143,31 +225,88 @@
   </div>
 </section>
 
+<button class="start" id="startBtn">Начать тренировку</button>
+<button class="start alt" id="muBtn">Выбрать мышцы</button>
+
 <ul class="list" id="list"></ul>
 
-<div class="foot"><button class="reset" id="reset">Сбросить отметки дня</button></div>
+<div class="foot"><button class="reset" id="editBtn">Править список</button><button class="reset" id="reset">Сбросить отметки</button><button class="reset" id="restore" hidden>Вернуть стандартный</button></div>
+
+<div class="reg" id="reg" hidden>
+  <div class="reg-in">
+    <h2>Создай персонажа</h2>
+    <label class="avapick"><div class="ava" id="regAva"></div><span>Загрузить фото</span><input type="file" accept="image/*" id="file" hidden></label>
+    <input id="fName" placeholder="Имя" maxlength="24">
+    <div class="two"><input id="fH" type="number" inputmode="numeric" placeholder="Рост, см"><input id="fW" type="number" inputmode="decimal" placeholder="Вес, кг"></div>
+    <p class="lab">Что есть дома</p>
+    <div class="chips" id="chips"></div>
+    <button class="go" id="go">Начать</button>
+  </div>
+</div>
+
+<div class="reg wk" id="wk" hidden>
+  <div class="reg-in">
+    <div class="wk-top"><button class="reset" id="wkClose">Закрыть</button><span id="wkPos"></span></div>
+    <h2 id="wkName"></h2>
+    <div class="wk-sets" id="wkSets"></div>
+    <div class="wk-timer" id="wkTimer" hidden>
+      <span>Отдых</span><b id="wkTime">0:00</b>
+      <div class="xp"><i id="wkBar"></i></div>
+      <button class="reset" id="wkSkip">Пропустить</button>
+    </div>
+    <div class="wk-nav"><button class="chip" id="wkPrev" aria-label="Назад">←</button><button class="go" id="wkDone">Подход выполнен</button><button class="chip" id="wkNext" aria-label="Дальше">→</button></div>
+  </div>
+</div>
+
+<div class="reg st" id="st" hidden>
+  <div class="reg-in">
+    <div class="wk-top"><button class="reset" id="stClose">Закрыть</button><span>Статистика</span></div>
+    <div class="reg-in" id="stBody"></div>
+  </div>
+</div>
+
+<div class="reg sh" id="sh" hidden>
+  <div class="reg-in">
+    <div class="wk-top"><button class="reset" id="shClose">Закрыть</button><span>Магазин</span></div>
+    <div class="reg-in" id="shBody"></div>
+  </div>
+</div>
+
+<div class="reg mu" id="mu" hidden>
+  <div class="reg-in">
+    <div class="wk-top"><button class="reset" id="muClose">Закрыть</button><span>Целевые мышцы</span></div>
+    <div class="reg-in" id="muBody"></div>
+  </div>
+</div>
+
+<div class="reg lb" id="lb" hidden>
+  <div class="reg-in">
+    <div class="wk-top"><button class="reset" id="lbClose">Закрыть</button><span>Рейтинг</span></div>
+    <div class="reg-in" id="lbBody"></div>
+  </div>
+</div>
 
 <script>
 // ───────── Данные: день → место → упражнения [название, "подходы × повторы"]
 const DAYS = [
   { short: "Пн", c: ["#ff5a5f","#ff8a5b","#fff"], title: "Грудь и трицепс", rest: "Отдых между подходами: 90 сек",
     gym: [["Жим штанги лёжа","4×8"],["Жим гантелей на наклонной","3×10"],["Разводка гантелей","3×12"],["Жим узким хватом","3×10"],["Французский жим","3×12"]],
-    home: [["Отжимания","4×макс"],["Отжимания, ноги на возвышении","3×12"],["Алмазные отжимания","3×10"],["Обратные отжимания от стула","3×12"]] },
+    home: [["Жим штанги лёжа","4×8","b"],["Отжимания","4×макс"],["Отжимания, ноги на возвышении","3×12"],["Алмазные отжимания","3×10"],["Обратные отжимания от стула","3×12"]] },
   { short: "Вт", c: ["#4c8dff","#6fd0ff","#fff"], title: "Спина и бицепс", rest: "Отдых между подходами: 90 сек",
     gym: [["Подтягивания","4×8"],["Тяга верхнего блока","4×10"],["Тяга штанги в наклоне","3×10"],["Тяга нижнего блока","3×12"],["Сгибания на бицепс со штангой","3×12"]],
-    home: [["Подтягивания на турнике","4×макс"],["Тяга гантели одной рукой","4×12"],["Тяга рюкзака в наклоне","3×12"],["Сгибания с гантелями","3×12"],["Супермен","3×15"]] },
+    home: [["Подтягивания на турнике","4×макс","t"],["Тяга гантели одной рукой","4×12","d"],["Тяга рюкзака в наклоне","3×12"],["Сгибания с гантелями","3×12","d"],["Супермен","3×15"],["Тяга штанги в наклоне","3×10","b"]] },
   { short: "Ср", c: ["#ffc83d","#ff9f3d","#2a1d00"], title: "Ноги", rest: "Отдых между подходами: 2 мин",
     gym: [["Приседания со штангой","4×8"],["Жим ногами","4×10"],["Румынская тяга","3×10"],["Разгибания ног","3×12"],["Подъём на носки","4×15"]],
-    home: [["Приседания","4×20"],["Болгарские выпады","3×12"],["Ягодичный мостик","4×15"],["Выпады вперёд","3×12"],["Подъём на носки","4×20"]] },
+    home: [["Приседания","4×20"],["Болгарские выпады","3×12"],["Ягодичный мостик","4×15"],["Выпады вперёд","3×12"],["Подъём на носки","4×20"],["Приседания со штангой","4×8","b"]] },
   { short: "Чт", c: ["#34d399","#8be36b","#06281a"], title: "Плечи и пресс", rest: "Отдых между подходами: 60 сек",
     gym: [["Жим штанги стоя","4×8"],["Махи гантелей в стороны","4×12"],["Махи в наклоне","3×12"],["Шраги","3×12"],["Скручивания","3×15"],["Подъём ног в висе","3×12"]],
-    home: [["Жим гантелей стоя","4×10"],["Махи гантелей в стороны","3×15"],["Отжимания уголком","3×10"],["Планка","3×45 сек"],["Скручивания","3×20"],["Подъём ног лёжа","3×15"]] },
+    home: [["Жим гантелей стоя","4×10","d"],["Махи гантелей в стороны","3×15","d"],["Отжимания уголком","3×10"],["Планка","3×45 сек"],["Скручивания","3×20"],["Подъём ног лёжа","3×15"]] },
   { short: "Пт", c: ["#a78bfa","#e879f9","#fff"], title: "Грудь и спина", rest: "Отдых между подходами: 90 сек",
     gym: [["Жим гантелей лёжа","4×10"],["Тяга верхнего блока","4×10"],["Отжимания на брусьях","3×10"],["Тяга гантели","3×10"],["Сведение рук в кроссовере","3×12"]],
-    home: [["Отжимания","4×макс"],["Подтягивания","4×макс"],["Тяга гантели одной рукой","3×12"],["Узкие отжимания","3×10"],["Супермен","3×15"]] },
+    home: [["Отжимания","4×макс"],["Подтягивания","4×макс","t"],["Тяга гантели одной рукой","3×12","d"],["Узкие отжимания","3×10"],["Супермен","3×15"]] },
   { short: "Сб", c: ["#22d3ee","#2dd4bf","#04262b"], title: "Ноги и ягодицы", rest: "Отдых между подходами: 2 мин",
     gym: [["Становая тяга","4×6"],["Выпады с гантелями","3×12"],["Ягодичный мостик со штангой","4×10"],["Сгибания ног лёжа","3×12"],["Отведение ноги в тренажёре","3×15"]],
-    home: [["Приседания сумо","4×15"],["Мостик на одной ноге","3×12"],["Выпады назад","3×12"],["Румынская тяга с гантелями","3×12"],["Прыжки из приседа","3×15"]] },
+    home: [["Приседания сумо","4×15"],["Мостик на одной ноге","3×12"],["Выпады назад","3×12"],["Румынская тяга с гантелями","3×12","d"],["Прыжки из приседа","3×15"]] },
   { short: "Вс", c: ["#64748b","#94a3b8","#fff"], title: "Отдых", rest: "Сегодня без железа. Мышцы растут, пока ты отдыхаешь.",
     gym: [["Прогулка","30 мин"],["Растяжка","10 мин"],["Сон","8 часов"]],
     home: [["Прогулка","30 мин"],["Растяжка","10 мин"],["Сон","8 часов"]] }
@@ -186,6 +325,14 @@ const KEY = "gym-done-v1";
 try { done = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { done = {}; }
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} };
 const stateKey = () => `${place}-${day}`;
+const esc = t => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+let editing = false, custom = {};
+const CKEY = "gym-custom-v1";
+try { custom = JSON.parse(localStorage.getItem(CKEY)) || {}; } catch (e) {}
+const saveCustom = () => { try { localStorage.setItem(CKEY, JSON.stringify(custom)); } catch (e) {} };
+const list = () => custom[stateKey()] || (place === "home" && me ? (f => f.length ? f : DAYS[day].home)(DAYS[day].home.filter(x => !x[2] || me.eq.includes(x[2]))) : DAYS[day][place]);
+const own = () => custom[stateKey()] || (custom[stateKey()] = list().map(x => x.slice(0, 2)));
+const _t = new Date(), TODAY = `${_t.getFullYear()}-${_t.getMonth() + 1}-${_t.getDate()}`;
 const $ = id => document.getElementById(id);
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
@@ -202,21 +349,23 @@ function renderDay() {
   const d = DAYS[day], r = document.documentElement.style;
   r.setProperty("--a1", d.c[0]); r.setProperty("--a2", d.c[1]); r.setProperty("--on", d.c[2]);
   $("s1").setAttribute("stop-color", d.c[0]); $("s2").setAttribute("stop-color", d.c[1]);
-  $("title").textContent = d.title;
+  $("title").textContent = custom[stateKey() + "|t"] || d.title;
   $("note").textContent = d.rest;
-  const marks = done[stateKey()] || [];
-  $("list").innerHTML = d[place].map(([n, s], i) => `
+  const marks = done[dk()] || [];
+  $("list").innerHTML = editing ? editHTML() : list().map(([n, s], i) => `
     <li><button class="row" role="checkbox" aria-checked="${marks.includes(i)}" data-i="${i}">
       <span class="dot"><span>${i + 1}</span>${CHECK}</span>
-      <span class="name">${n}</span><span class="sets">${s}</span>
+      <span class="name">${esc(n)}</span><span class="sets">${esc(s)}</span>
     </button></li>`).join("");
+  $("startBtn").hidden = editing || (day === 6 && !custom[stateKey()]) || !list().length;
+  $("muBtn").hidden = editing;
   updateProgress();
 }
 
 function updateProgress() {
-  const total = DAYS[day][place].length, n = (done[stateKey()] || []).length;
+  const total = list().length, n = (done[dk()] || []).length;
   $("count").textContent = `${n}/${total}`;
-  $("fg").style.strokeDashoffset = 188.5 * (1 - n / total);
+  $("fg").style.strokeDashoffset = 188.5 * (1 - (total ? n / total : 0));
 }
 
 // ───────── События
@@ -226,10 +375,11 @@ $("days").addEventListener("click", e => {
 });
 $("list").addEventListener("click", e => {
   const b = e.target.closest(".row"); if (!b) return;
-  const i = +b.dataset.i, k = stateKey(), arr = done[k] || (done[k] = []);
+  const i = +b.dataset.i, k = dk(), arr = done[k] || (done[k] = []);
   const at = arr.indexOf(i);
   at >= 0 ? arr.splice(at, 1) : arr.push(i);
-  save(); b.setAttribute("aria-checked", at < 0); updateProgress();
+  save(); b.setAttribute("aria-checked", at < 0); updateProgress(); addXp(at < 0 ? 10 : -10);
+  if (at < 0 && arr.length === list().length && !xp.bonus[k]) { xp.bonus[k] = 1; addXp(50); }
   try { if (at < 0 && Telegram.WebApp.HapticFeedback) Telegram.WebApp.HapticFeedback.impactOccurred("light"); } catch (e) {}
 });
 function setPlace(p) {
@@ -240,9 +390,347 @@ function setPlace(p) {
 }
 $("gym").onclick = () => setPlace("gym");
 $("home").onclick = () => setPlace("home");
-$("reset").onclick = () => { delete done[stateKey()]; save(); renderDay(); };
+$("reset").onclick = () => { addXp(-10 * (done[dk()] || []).length); delete done[dk()]; save(); renderDay(); };
 
-renderDays(); renderDay();
+function editHTML() {
+  return list().map(([n, s], i) => `<li class="erow">
+    <input data-i="${i}" data-f="0" value="${esc(n)}" aria-label="Название">
+    <input data-i="${i}" data-f="1" value="${esc(s)}" aria-label="Подходы">
+    <button class="del" data-i="${i}" aria-label="Удалить">✕</button></li>`).join("")
+    + '<li><button class="add" id="add">+ Добавить упражнение</button></li>';
+}
+$("list").addEventListener("input", e => {
+  const t = e.target; if (!t.dataset || t.dataset.f === undefined) return;
+  own()[+t.dataset.i][+t.dataset.f] = t.value; saveCustom();
+});
+$("list").addEventListener("click", e => {
+  if (!editing) return;
+  const del = e.target.closest(".del");
+  if (del) { own().splice(+del.dataset.i, 1); delete done[dk()]; saveCustom(); save(); renderDay(); return; }
+  if (e.target.closest("#add")) { own().push(["Новое упражнение", "3×10"]); delete done[dk()]; saveCustom(); save(); renderDay(); }
+});
+$("editBtn").onclick = () => {
+  editing = !editing;
+  $("editBtn").textContent = editing ? "Готово" : "Править список";
+  $("restore").hidden = !editing; $("reset").hidden = editing;
+  renderDay();
+};
+$("restore").onclick = () => { delete custom[stateKey()]; delete custom[stateKey() + "|t"]; delete done[dk()]; saveCustom(); save(); renderDay(); };
+
+const PKEY = "gym-profile-v1", XKEY = "gym-xp-v1";
+const EQ = { d: "Гантели", t: "Турник", b: "Штанга" };
+let me = null, xp = { total: 0, bonus: {} }, eqSel = [], pend = "";
+try { me = JSON.parse(localStorage.getItem(PKEY)); } catch (e) {}
+try { xp = JSON.parse(localStorage.getItem(XKEY)) || xp; } catch (e) {}
+const tgu = (() => { try { return Telegram.WebApp.initDataUnsafe.user || {}; } catch (e) { return {}; } })();
+const _m = new Date(_t); _m.setDate(_t.getDate() - ((_t.getDay() + 6) % 7));
+const WEEK = `${_m.getFullYear()}-${_m.getMonth() + 1}-${_m.getDate()}`;
+function dk() { return `${WEEK}|${stateKey()}`; }
+function lvl(t) { let l = 1; while (t >= 100 * l) { t -= 100 * l; l++; } return { l, cur: t, need: 100 * l }; }
+const rank = l => l < 5 ? "E" : l < 10 ? "D" : l < 15 ? "C" : l < 20 ? "B" : l < 30 ? "A" : "S";
+function addXp(n) {
+  xp.total = Math.max(0, xp.total + n); xp.coins = Math.max(0, (xp.coins || 0) + n / 2);
+  try { localStorage.setItem(XKEY, JSON.stringify(xp)); } catch (e) {}
+  renderStatus();
+  if (xp.join) lbSoon();
+}
+function setAva(el, src, name) {
+  el.style.backgroundImage = src ? `url("${src}")` : "";
+  el.textContent = src ? "" : (name || "?").trim().charAt(0).toUpperCase();
+}
+function renderStatus() {
+  const m = me || {}, L = lvl(xp.total);
+  setAva($("ava"), m.ava || tgu.photo_url, m.name || tgu.first_name);
+  $("meName").textContent = m.name || "Игрок";
+  $("rank").textContent = rank(L.l) + "-ранг";
+  const ti = SHOP.find(i => i.id === xp.title), fr = SHOP.find(i => i.id === xp.frame);
+  $("ava").style.borderColor = fr ? fr.c : "";
+  $("meSub").textContent = (ti ? ti.v + " · " : "") + `Ур. ${L.l} · ${L.cur}/${L.need} XP · ${xp.coins || 0} мон.` + (m.h ? ` · ${m.h} см` : "") + (m.w ? ` · ${m.w} кг` : "");
+  $("xpBar").style.width = (L.cur / L.need * 100) + "%";
+}
+function renderChips() {
+  $("chips").innerHTML = Object.entries(EQ).map(([k, v]) =>
+    `<button class="chip" data-k="${k}" aria-pressed="${eqSel.includes(k)}">${v}</button>`).join("");
+}
+function openReg() {
+  const m = me || {};
+  $("fName").value = m.name || tgu.first_name || "";
+  $("fH").value = m.h || ""; $("fW").value = m.w || "";
+  pend = m.ava || tgu.photo_url || ""; eqSel = (m.eq || []).slice();
+  setAva($("regAva"), pend, $("fName").value); renderChips(); $("reg").hidden = false;
+}
+$("chips").onclick = e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  const k = b.dataset.k; eqSel = eqSel.includes(k) ? eqSel.filter(x => x !== k) : [...eqSel, k]; renderChips();
+};
+$("file").onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const im = new Image();
+  im.onload = () => {
+    const c = document.createElement("canvas"); c.width = c.height = 128;
+    const s = Math.min(im.width, im.height);
+    c.getContext("2d").drawImage(im, (im.width - s) / 2, (im.height - s) / 2, s, s, 0, 0, 128, 128);
+    pend = c.toDataURL("image/jpeg", .8); setAva($("regAva"), pend, $("fName").value); URL.revokeObjectURL(im.src);
+  };
+  im.src = URL.createObjectURL(f);
+};
+$("go").onclick = () => {
+  me = { name: $("fName").value.trim() || "Игрок", h: +$("fH").value || 0, w: +$("fW").value || 0, eq: eqSel, ava: pend };
+  try { localStorage.setItem(PKEY, JSON.stringify(me)); } catch (e) {}
+  $("reg").hidden = true; renderStatus(); renderDay();
+};
+$("me").onclick = openReg;
+
+let wi = 0, ws = 1, wt = null;
+const buzz = t => { try { Telegram.WebApp.HapticFeedback.notificationOccurred(t); } catch (e) {} };
+const fmt = n => `${Math.floor(n / 60)}:${String(n % 60).padStart(2, "0")}`;
+function restSec() {
+  const r = DAYS[day].rest; let m = /(\d+)\s*сек/.exec(r); if (m) return +m[1];
+  m = /(\d+)\s*мин/.exec(r); return m ? +m[1] * 60 : 60;
+}
+const nSets = () => { const m = /^(\d+)\s*×/.exec(list()[wi][1]); return m ? +m[1] : 1; };
+function markDone(i) {
+  const k = dk(), arr = done[k] || (done[k] = []);
+  if (arr.includes(i)) return;
+  arr.push(i); save(); addXp(10);
+  if (arr.length === list().length && !xp.bonus[k]) { xp.bonus[k] = 1; addXp(50); }
+}
+function wkShow() {
+  const L = list(), k = nSets();
+  $("wkName").textContent = L[wi][0];
+  $("wkSets").textContent = `${L[wi][1]} · подход ${ws}/${k}`;
+  $("wkPos").textContent = `Упражнение ${wi + 1} / ${L.length}`;
+  $("wkDone").textContent = ws < k ? "Подход выполнен" : "Упражнение готово";
+}
+function wkStop() { clearInterval(wt); wt = null; $("wkTimer").hidden = true; }
+function wkRest() {
+  wkStop();
+  const total = restSec(), end = Date.now() + total * 1000;
+  $("wkTimer").hidden = false;
+  const tick = () => {
+    const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+    $("wkTime").textContent = fmt(left); $("wkBar").style.width = (left / total * 100) + "%";
+    if (left <= 0) { wkStop(); buzz("success"); try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (e) {} }
+  };
+  tick(); wt = setInterval(tick, 500);
+}
+function wkClose() { wkStop(); $("wk").hidden = true; renderDay(); }
+$("startBtn").onclick = () => {
+  const dn = done[dk()] || [];
+  wi = Math.max(0, list().findIndex((_, i) => !dn.includes(i))); ws = 1;
+  $("wk").hidden = false; wkShow();
+};
+$("wkDone").onclick = () => {
+  buzz("success");
+  if (ws < nSets()) { ws++; wkShow(); wkRest(); return; }
+  markDone(wi);
+  if (wi < list().length - 1) { wi++; ws = 1; wkShow(); wkRest(); } else wkClose();
+};
+$("wkPrev").onclick = () => { if (wi > 0) { wi--; ws = 1; wkStop(); wkShow(); } };
+$("wkNext").onclick = () => { if (wi < list().length - 1) { wi++; ws = 1; wkStop(); wkShow(); } };
+$("wkSkip").onclick = wkStop;
+$("wkClose").onclick = wkClose;
+
+const MN = ["Грудь", "Спина", "Ноги", "Плечи", "Руки", "Пресс"];
+const MU = [{ Грудь: .6, Руки: .4 }, { Спина: .65, Руки: .35 }, { Ноги: 1 }, { Плечи: .6, Пресс: .4 }, { Грудь: .5, Спина: .5 }, { Ноги: 1 }, {}];
+const fmtD = d => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+let stMode = "wk";
+function stats() {
+  const wk = {}, all = {}, perDay = Array(7).fill(0), byDate = {}; let total = 0;
+  for (const [key, arr] of Object.entries(done)) {
+    if (!key.includes("|") || !arr.length) continue;
+    const [w, rest] = key.split("|"), di = +rest.split("-")[1], n = arr.length;
+    const [Y, M, D] = w.split("-").map(Number), ds = fmtD(new Date(Y, M - 1, D + di));
+    total += n; byDate[ds] = (byDate[ds] || 0) + n;
+    if (w === WEEK) perDay[di] += n;
+    for (const [m, sh] of Object.entries(MU[di])) { all[m] = (all[m] || 0) + n * sh; if (w === WEEK) wk[m] = (wk[m] || 0) + n * sh; }
+  }
+  let streak = 0; const d = new Date();
+  if (!byDate[fmtD(d)]) d.setDate(d.getDate() - 1);
+  while (byDate[fmtD(d)]) { streak++; d.setDate(d.getDate() - 1); }
+  return { wk, all, perDay, total, streak };
+}
+function radar(v) {
+  const mx = Math.max(...MN.map(m => v[m] || 0), 1), c = 120, R = 78;
+  const pt = (i, r) => { const a = -Math.PI / 2 + i * Math.PI / 3; return [c + r * Math.cos(a), c + r * Math.sin(a)]; };
+  const ring = k => MN.map((_, i) => pt(i, R * k).join(",")).join(" ");
+  const poly = MN.map((m, i) => pt(i, R * Math.max(.04, (v[m] || 0) / mx)).join(",")).join(" ");
+  return `<svg class="radar" viewBox="0 0 240 240" role="img" aria-label="Радар мышц">`
+    + [.33, .66, 1].map(k => `<polygon points="${ring(k)}" fill="none" stroke="rgba(255,255,255,.14)"/>`).join("")
+    + MN.map((_, i) => { const [x, y] = pt(i, R); return `<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.1)"/>`; }).join("")
+    + `<polygon points="${poly}" fill="rgba(168,85,247,.35)" stroke="#c084fc" stroke-width="2"/>`
+    + MN.map((m, i) => { const [x, y] = pt(i, R + 22); return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="#98a1b3" font-size="12" font-weight="700">${m}</text>`; }).join("")
+    + `</svg>`;
+}
+function renderStats() {
+  const S = stats(), v = stMode === "wk" ? S.wk : S.all, mx = Math.max(...S.perDay, 1);
+  $("stBody").innerHTML = `
+    <div class="cards"><div><b>${S.streak}</b><span>дней подряд</span></div><div><b>${Object.keys(xp.bonus).length}</b><span>тренировок</span></div><div><b>${S.total}</b><span>упражнений</span></div></div>
+    <p class="lab">Упражнения по дням, эта неделя</p>
+    <div class="bars">${DAYS.map((d, i) => `<div class="bcol"><em>${S.perDay[i] || ""}</em><div class="btrack"><i class="${i === todayIdx ? "now" : ""}" style="height:${S.perDay[i] / mx * 100}%"></i></div><span>${d.short}</span></div>`).join("")}</div>
+    <p class="lab">Какие мышцы качаешь</p>
+    <div class="chips"><button class="chip" data-m="wk" aria-pressed="${stMode === "wk"}">Неделя</button><button class="chip" data-m="all" aria-pressed="${stMode === "all"}">Всё время</button></div>
+    ${radar(v)}<p class="hint">Приблизительно: мышцы считаются по дню сплита.</p>`;
+}
+$("stBody").addEventListener("click", e => { const b = e.target.closest("[data-m]"); if (b) { stMode = b.dataset.m; renderStats(); } });
+$("statBtn").onclick = () => { stMode = "wk"; renderStats(); $("st").hidden = false; };
+$("stClose").onclick = () => { $("st").hidden = true; };
+
+xp.coins = xp.coins ?? Math.floor(xp.total / 2);
+xp.owned = xp.owned || []; xp.rewards = xp.rewards || []; xp.frame = xp.frame || ""; xp.title = xp.title || "";
+const saveXp = () => { try { localStorage.setItem(XKEY, JSON.stringify(xp)); } catch (e) {} };
+let shMsg = "";
+function renderShop() {
+  const row = it => {
+    const own = xp.owned.includes(it.id), on = xp.frame === it.id || xp.title === it.id;
+    const btn = it.k === "use" || !own
+      ? `<button class="buy" data-b="${it.id}" ${xp.coins < it.p ? "disabled" : ""}>${it.p} мон.</button>`
+      : `<button class="buy on" data-e="${it.id}">${on ? "Надето" : "Надеть"}</button>`;
+    return `<div class="srow"><div><b>${it.t}</b><span>${it.d}</span></div>${btn}</div>`;
+  };
+  $("shBody").innerHTML = `
+    <div class="bal"><b>${xp.coins}</b><span>монет · +5 за упражнение, +25 за тренировку</span></div>
+    ${shMsg ? `<div class="msg">${esc(shMsg)}</div>` : ""}
+    <p class="lab">Предметы</p>${SHOP.map(row).join("")}
+    <p class="lab">Свои награды (забираешь в реальной жизни)</p>
+    ${xp.rewards.map((r, i) => `<div class="srow"><div><b>${esc(r.n)}</b></div><div><button class="buy" data-r="${i}" ${xp.coins < r.p ? "disabled" : ""}>${r.p} мон.</button><button class="x" data-x="${i}" aria-label="Удалить">✕</button></div></div>`).join("")}
+    <div class="two"><input id="rn" placeholder="Награда" maxlength="30"><input id="rp" type="number" inputmode="numeric" placeholder="Цена"></div>
+    <button class="add" id="radd">+ Добавить награду</button>`;
+}
+const SHOP = [
+  { id: "elixir", t: "Эликсир опыта", d: "+100 XP сразу", p: 60, k: "use" },
+  { id: "f-gold", t: "Золотая рамка", d: "Рамка аватара", p: 150, k: "frame", c: "#f5c542" },
+  { id: "f-red", t: "Алая рамка", d: "Рамка аватара", p: 150, k: "frame", c: "#ff4d5a" },
+  { id: "f-ice", t: "Ледяная рамка", d: "Рамка аватара", p: 150, k: "frame", c: "#5ad2ff" },
+  { id: "t-hunter", t: "Титул «Охотник»", d: "Подпись у имени", p: 100, k: "title", v: "Охотник" },
+  { id: "t-shadow", t: "Титул «Тень»", d: "Подпись у имени", p: 250, k: "title", v: "Тень" },
+  { id: "t-monarch", t: "Титул «Монарх»", d: "Подпись у имени", p: 500, k: "title", v: "Монарх" }
+];
+function equip(id) {
+  const it = SHOP.find(x => x.id === id);
+  if (it.k === "frame") xp.frame = xp.frame === id ? "" : id; else xp.title = xp.title === id ? "" : id;
+}
+$("shBody").addEventListener("click", e => {
+  const g = a => e.target.closest(`[data-${a}]`);
+  let b;
+  if ((b = g("b"))) {
+    const it = SHOP.find(x => x.id === b.dataset.b);
+    if (!it || xp.coins < it.p || (it.k !== "use" && xp.owned.includes(it.id))) return;
+    xp.coins -= it.p; shMsg = "";
+    if (it.k === "use") xp.total += 100; else { xp.owned.push(it.id); equip(it.id); }
+    buzz("success");
+  } else if ((b = g("e"))) equip(b.dataset.e);
+  else if ((b = g("r"))) {
+    const r = xp.rewards[+b.dataset.r]; if (!r || xp.coins < r.p) return;
+    xp.coins -= r.p; shMsg = `Получено: ${r.n}. Забирай в реальной жизни!`; buzz("success");
+  } else if ((b = g("x"))) xp.rewards.splice(+b.dataset.x, 1);
+  else if (e.target.closest("#radd")) {
+    const n = $("rn").value.trim(), p = parseInt($("rp").value);
+    if (!n || !(p > 0)) return;
+    xp.rewards.push({ n, p });
+  } else return;
+  saveXp(); renderStatus(); renderShop();
+});
+$("shopBtn").onclick = () => { shMsg = ""; renderShop(); $("sh").hidden = false; };
+$("shClose").onclick = () => { $("sh").hidden = true; };
+
+const EX = {
+  "Грудь": { g: [["Жим штанги лёжа","4×8"],["Жим гантелей на наклонной","3×10"],["Разводка гантелей","3×12"],["Отжимания на брусьях","3×10"]],
+             h: [["Отжимания","4×макс"],["Отжимания, ноги на возвышении","3×12"],["Алмазные отжимания","3×10"],["Жим штанги лёжа","4×8","b"]] },
+  "Плечи": { g: [["Жим штанги стоя","4×8"],["Махи гантелей в стороны","4×12"],["Махи в наклоне","3×12"],["Шраги","3×12"]],
+             h: [["Жим гантелей стоя","4×10","d"],["Махи гантелей в стороны","3×15","d"],["Отжимания уголком","3×10"]] },
+  "Бицепс": { g: [["Сгибания на бицепс со штангой","3×12"],["Молотки с гантелями","3×12"],["Подтягивания обратным хватом","3×8"]],
+              h: [["Сгибания с гантелями","3×12","d"],["Подтягивания обратным хватом","3×8","t"],["Сгибания с рюкзаком","3×12"]] },
+  "Трицепс": { g: [["Жим узким хватом","3×10"],["Французский жим","3×12"],["Разгибания на блоке","3×12"]],
+               h: [["Обратные отжимания от стула","3×12"],["Алмазные отжимания","3×10"],["Французский жим с гантелью","3×12","d"]] },
+  "Пресс": { g: [["Скручивания","3×15"],["Подъём ног в висе","3×12"],["Планка","3×45 сек"]],
+             h: [["Скручивания","3×20"],["Подъём ног лёжа","3×15"],["Планка","3×45 сек"]] },
+  "Спина": { g: [["Подтягивания","4×8"],["Тяга верхнего блока","4×10"],["Тяга штанги в наклоне","3×10"],["Тяга нижнего блока","3×12"]],
+             h: [["Подтягивания на турнике","4×макс","t"],["Тяга гантели одной рукой","4×12","d"],["Тяга рюкзака в наклоне","3×12"],["Супермен","3×15"],["Тяга штанги в наклоне","3×10","b"]] },
+  "Ноги": { g: [["Приседания со штангой","4×8"],["Жим ногами","4×10"],["Выпады с гантелями","3×12"],["Разгибания ног","3×12"],["Подъём на носки","4×15"]],
+            h: [["Приседания","4×20"],["Болгарские выпады","3×12"],["Выпады вперёд","3×12"],["Подъём на носки","4×20"],["Приседания со штангой","4×8","b"]] },
+  "Ягодицы": { g: [["Ягодичный мостик со штангой","4×10"],["Румынская тяга","3×10"],["Сгибания ног лёжа","3×12"],["Отведение ноги в тренажёре","3×15"]],
+               h: [["Ягодичный мостик","4×15"],["Мостик на одной ноге","3×12"],["Приседания сумо","4×15"],["Румынская тяга с гантелями","3×12","d"]] }
+};
+let muSel = [];
+function renderMu() {
+  const on = m => muSel.includes(m);
+  $("muBody").innerHTML = `
+    <p class="lab">Что качаем сегодня?</p>
+    <div class="chips">${Object.keys(EX).map(m => `<button class="chip" data-m="${m}" aria-pressed="${on(m)}">${on(m) ? "✓ " : ""}${m}</button>`).join("")}</div>
+    <button class="go" id="muGo" ${muSel.length ? "" : "disabled"}>Готово</button>`;
+}
+function buildMu() {
+  const n = muSel.length === 1 ? 5 : muSel.length === 2 ? 3 : 2, home = place === "home", seen = new Set(), out = [];
+  for (const m of muSel) {
+    const all = EX[m][home ? "h" : "g"];
+    let c = all.filter(x => !home || !x[2] || !me || me.eq.includes(x[2]));
+    if (!c.length) c = all;
+    c.filter(x => !seen.has(x[0])).slice(0, n).forEach(x => { seen.add(x[0]); out.push([x[0], x[1]]); });
+  }
+  custom[stateKey()] = out; custom[stateKey() + "|t"] = muSel.join(" + ");
+  delete done[dk()]; saveCustom(); save(); $("mu").hidden = true; renderDay();
+}
+$("muBody").addEventListener("click", e => {
+  const m = e.target.closest("[data-m]");
+  if (m) { const k = m.dataset.m; muSel = muSel.includes(k) ? muSel.filter(x => x !== k) : [...muSel, k]; renderMu(); return; }
+  if (e.target.closest("#muGo") && muSel.length) buildMu();
+});
+$("muBtn").onclick = () => { muSel = []; renderMu(); $("mu").hidden = false; };
+$("muClose").onclick = () => { $("mu").hidden = true; };
+
+const API = "https://gym-rating.daniktv003redmi8.workers.dev"; // ← сюда вставь ссылку на воркер, например https://gym-rating.имя.workers.dev
+xp.join = !!xp.join;
+let lbScope = "all", lbData = null, lbErr = "", lbT;
+const lbSoon = () => { clearTimeout(lbT); lbT = setTimeout(() => lbLoad(true), 4000); };
+const lbPost = body => fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+async function lbLoad(silent) {
+  const tg = window.Telegram && Telegram.WebApp;
+  if (!API) lbErr = "Сервер ещё не подключён.";
+  else if (!tg || !tg.initData) lbErr = "Рейтинг работает только внутри Телеграма.";
+  else {
+    try {
+      const r = await lbPost({ initData: tg.initData, xp: xp.total, name: (me && me.name) || "", group: (tg.initDataUnsafe && tg.initDataUnsafe.start_param) || "", scope: lbScope });
+      if (!r.ok) throw 0;
+      lbData = await r.json(); lbErr = "";
+    } catch (e) { lbErr = "Не получилось загрузить рейтинг. Попробуй позже."; }
+  }
+  if (!$("lb").hidden) renderLb();
+}
+function renderLb() {
+  const B = $("lbBody");
+  if (!xp.join) {
+    B.innerHTML = `<div class="msg">В рейтинге будут видны твоё имя, фото профиля Телеграма и XP. Данные хранятся на сервере. Выйти и удалить их можно в любой момент.</div>
+      <button class="go" id="lbJoin">Участвовать</button>`;
+    return;
+  }
+  if (lbErr) { B.innerHTML = `<div class="msg">${esc(lbErr)}</div><button class="reset" id="lbLeave">Выйти из рейтинга</button>`; return; }
+  if (!lbData) { B.innerHTML = `<p class="hint">Загрузка…</p>`; return; }
+  const rows = lbData.top.map((r, i) => {
+    const L = lvl(r.xp).l, ph = r.photo ? `style="background-image:url(${esc(JSON.stringify(r.photo))})"` : "";
+    return `<div class="srow lbr${r.id === lbData.me ? " me" : ""}"><span class="pl">${i + 1}</span>
+      <div class="ava sm" ${ph}>${r.photo ? "" : esc((r.name || "?").charAt(0).toUpperCase())}</div>
+      <div class="lbn"><b>${esc(r.name)}</b><span>Ур. ${L} · ${rank(L)}-ранг</span></div><b class="lxp">${r.xp} XP</b></div>`;
+  }).join("");
+  B.innerHTML = `
+    <div class="chips"><button class="chip" data-sc="all" aria-pressed="${lbScope === "all"}">Все</button>${lbData.mygroup ? `<button class="chip" data-sc="group" aria-pressed="${lbScope === "group"}">Моя группа</button>` : ""}</div>
+    ${rows || '<p class="hint">Пока никого нет.</p>'}
+    <button class="reset" id="lbLeave">Выйти из рейтинга и удалить данные</button>`;
+}
+$("lbBody").addEventListener("click", async e => {
+  const sc = e.target.closest("[data-sc]");
+  if (sc) { lbScope = sc.dataset.sc; await lbLoad(); return; }
+  if (e.target.closest("#lbJoin")) { xp.join = true; saveXp(); renderLb(); await lbLoad(); return; }
+  if (e.target.closest("#lbLeave")) {
+    try { const tg = Telegram.WebApp; if (API && tg.initData) await lbPost({ initData: tg.initData, del: true }); } catch (err) {}
+    xp.join = false; lbData = null; lbErr = ""; saveXp(); renderLb();
+  }
+});
+$("lbBtn").onclick = () => { $("lb").hidden = false; renderLb(); if (xp.join) lbLoad(); };
+$("lbClose").onclick = () => { $("lb").hidden = true; };
+
+renderDays(); renderDay(); renderStatus();
+if (!me) openReg();
 </script>
 </body>
 </html>
